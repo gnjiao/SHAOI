@@ -55,7 +55,7 @@ namespace Main
             {
                 if (ParStateSoft.StateMachine_e == StateMachine_enum.NullRun)
                 {
-                    ShowState("相机1空跑默认OK");
+                    ShowState("相机1空跑默认OK"); 
                     return StateComprehensive_enum.True;
                 }
 
