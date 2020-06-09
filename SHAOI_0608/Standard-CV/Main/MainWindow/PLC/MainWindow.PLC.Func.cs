@@ -44,9 +44,9 @@ namespace Main
                 LogicPLC.L_I.WriteRegData3((int)DataRegister3.InsertStdCom, stdCom);
 
                 ShowState(string.Format("即将发送卡塞{0}插栏坐标", CSTLocation.CurrentCstNo));
-                //int numInsert = Convert.ToInt32(
-                //    LogicPLC.L_I.ReadRegData1((int)DataRegister1.CurrentInsertSum));
-                int numInsert = num;
+                int numInsert = Convert.ToInt32(
+                    LogicPLC.L_I.ReadRegData1((int)DataRegister1.CurrentInsertSum));
+                //int numInsert = num;
                 int intCol = numInsert / Protocols.confCSTRow;
                 int intRow = numInsert % Protocols.confCSTRow;
 
