@@ -10,79 +10,20 @@ namespace Main
 {
     partial class Protocols
     {
-        const string RefrenceStation1 = "Station1";
-        const string RefrenceStation2 = "Station2";
+        const string RefrenceStation1 = "adj1";
+        const string RefrenceStation2 = "adj2";
 
-        public static int AjdX_Station1
-        {
-            get => (int)ParAdjust.Value1(RefrenceStation1);
-            set
-            {
-                ParAdjust.SetValue1(RefrenceStation1, value);
-            }
-        }
+        public static double[] AdjX_Station = new double[2] 
+        { ParAdjust.Value1(RefrenceStation1),
+        ParAdjust.Value1(RefrenceStation2)};
 
-        public static int AjdY_Station1
-        {
-            get => (int)ParAdjust.Value2(RefrenceStation1);
-            set
-            {
-                ParAdjust.SetValue2(RefrenceStation1, value);
-            }
-        }
+        public static double[] AdjY_Station = new double[2]
+        { ParAdjust.Value2(RefrenceStation1),
+        ParAdjust.Value2(RefrenceStation2)};
 
-        public static int AjdZ_Station1
-        {
-            get => (int)ParAdjust.Value3(RefrenceStation1);
-            set
-            {
-                ParAdjust.SetValue2(RefrenceStation1, value);
-            }
-        }
-
-        public static int AjdR_Station1
-        {
-            get => (int)ParAdjust.Value4(RefrenceStation1);
-            set
-            {
-                ParAdjust.SetValue4(RefrenceStation1, value);
-            }
-        }
-
-        public static int AjdX_Station2
-        {
-            get => (int)ParAdjust.Value1(RefrenceStation2);
-            set
-            {
-                ParAdjust.SetValue1(RefrenceStation2, value);
-            }
-        }
-
-        public static int AjdY_Station2
-        {
-            get => (int)ParAdjust.Value2(RefrenceStation2);
-            set
-            {
-                ParAdjust.SetValue2(RefrenceStation2, value);
-            }
-        }
-
-        public static int AjdZ_Station2
-        {
-            get => (int)ParAdjust.Value3(RefrenceStation2);
-            set
-            {
-                ParAdjust.SetValue3(RefrenceStation2, value);
-            }
-        }
-
-        public static int AjdR_Station2
-        {
-            get => (int)ParAdjust.Value4(RefrenceStation2);
-            set
-            {
-                ParAdjust.SetValue4(RefrenceStation2, value);
-            }
-        }
+        public static double[] AdjR_Station = new double[2]
+        { ParAdjust.Value3(RefrenceStation1),
+        ParAdjust.Value3(RefrenceStation2)};
+        
     }
 }

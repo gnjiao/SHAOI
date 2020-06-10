@@ -3,6 +3,7 @@ using Camera;
 using DealCalibrate;
 using DealConfigFile;
 using DealRobot;
+using ModulePackage;
 using ParComprehensive;
 using StationDataManager;
 using System;
@@ -52,15 +53,23 @@ namespace Main
                     Protocols.ConfPlaceAngle, Protocols.ConfPreciseAngle);
                 ShowState(string.Format("工位{0}X方向补偿{1},Y方向补偿{2}", index, delta.DblValue1.ToString(ReserveDigits), delta.DblValue2.ToString(ReserveDigits)));
 
+
                 Point4D pos = new Point4D
                 {
-                    DblValue1 = delta.DblValue1 + StationDataMngr.PlacePos_L[index - 1].DblValue1 + Protocols.AjdX_Station1,
-                    DblValue2 = delta.DblValue2 + StationDataMngr.PlacePos_L[index - 1].DblValue2 + Protocols.AjdY_Station1,
+                    DblValue1 = delta.DblValue1
+                    + StationDataMngr.PlacePos_L[index - 1].DblValue1
+                    + ParAdjust.Value1("adj" + index),
+
+                    DblValue2 = delta.DblValue2
+                    + StationDataMngr.PlacePos_L[index - 1].DblValue2
+                    + ParAdjust.Value2("adj" + index),
+
                     DblValue3 = StationDataMngr.PlacePos_L[index - 1].DblValue3,
-                    DblValue4 = Protocols.ConfPlaceAngle
+                    DblValue4 = Protocols.ConfPlaceAngle + angle + ParAdjust.Value3("adj" + index)
                 };
 
                 LogicRobot.L_I.WriteRobotCMD(pos, Protocols.BotCmd_StationPos);
+                ShowState("发送机器人放片坐标：" + pos.DblValue1.ToString("f3") + @"/" + pos.DblValue2.ToString("f3"));
             }
         }
 
@@ -85,13 +94,20 @@ namespace Main
 
         public void CalibRC()
         {
+            Thread.Sleep(500);
+            //double curR= ModuleBase.GetCurAngleByY(Protocols.GlassXInPresize, AMP, Pt2Mark1, Pt2MarkRC);
             BaseParCalibrate baseParComprehensive = ParComprehensive2.P_I.GetCellParCalibrate(Camera2RC);
             ParCalibRotate parCalibRotate = (ParCalibRotate)baseParComprehensive;
 
             Point2D orgPoint = new FunCalibRotate().GetOriginPoint(Protocols.BotRCCalibAngle, Pt2Mark2, Pt2MarkRC);
 
-            parCalibRotate.XRC = orgPoint.DblValue1;
-            parCalibRotate.YRC = orgPoint.DblValue2;
+            Point2D offset = new Point2D(Protocols.GlassXInPresize / 2 / AMP, Protocols.GlassYInPresize / 2 / AMP);
+            double r = ModuleBase.GetCurAngleByY(Protocols.GlassXInPresize, AMP, Pt2Mark1, Pt2Mark2);
+            offset = TransDelta(offset, r + 0.5, 0);
+            Point2D rc = new Point2D(offset.DblValue1 + Pt2Mark2.DblValue1, offset.DblValue2 + Pt2Mark2.DblValue2);
+            ShowState("理论旋转中心X:" + rc.DblValue1 + ",Y:" + rc.DblValue2);
+            parCalibRotate.XRC = rc.DblValue1;// orgPoint.DblValue1;
+            parCalibRotate.YRC = rc.DblValue2;// orgPoint.DblValue2;
 
             ParComprehensive2.P_I.WriteXmlDoc(Camera2RC);
             //将参数保存到结果类

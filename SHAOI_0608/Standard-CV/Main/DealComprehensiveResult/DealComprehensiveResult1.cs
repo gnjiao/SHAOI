@@ -55,7 +55,7 @@ namespace Main
             {
                 if (ParStateSoft.StateMachine_e == StateMachine_enum.NullRun)
                 {
-                    ShowState("相机1空跑默认OK"); 
+                    ShowState("相机1空跑默认OK");
                     return StateComprehensive_enum.True;
                 }
 
@@ -265,10 +265,20 @@ namespace Main
             #endregion 定义
             try
             {
-                //旋转中心
-                StateComprehensive_enum stateComprehensive_e = g_BaseDealComprehensive.DealComprehensivePosNoDisplay(g_UCDisplayCamera, g_HtUCDisplay, Pos_enum.Pos3, out htResult);
+                //StateComprehensive_enum stateComprehensive_e = g_BaseDealComprehensive.DealComprehensivePosNoDisplay(
+                //    g_UCDisplayCamera, g_HtUCDisplay, Pos_enum.Pos1, out htResult);
+                //BaseResult result = htResult[Camera1Match1] as BaseResult;
 
-                ResultBlob result = htResult["C15"] as ResultBlob;
+                //if (!DealTypeResult(result))
+                //{
+                //    ShowAlarm("精定位相机1拍照NG!");
+                //    LogicRobot.L_I.WriteRobotCMD(Protocols.BotCmd_PreciseNG);
+                //    return StateComprehensive_enum.False;
+                //}
+
+                //Pt2Mark1.DblValue1 = result.X;
+                //Pt2Mark1.DblValue2 = result.Y;
+
                 return StateComprehensive_enum.True;
             }
             catch (Exception ex)
