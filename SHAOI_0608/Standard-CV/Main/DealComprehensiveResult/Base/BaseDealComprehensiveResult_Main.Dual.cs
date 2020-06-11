@@ -66,7 +66,7 @@ namespace Main
 
                     DblValue3 = StationDataMngr.PlacePos_L[index - 1].DblValue3,
                     DblValue4 = Protocols.ConfPlaceAngle + angle + ParAdjust.Value3("adj" + index)
-                };
+                }; 
 
                 LogicRobot.L_I.WriteRobotCMD(pos, Protocols.BotCmd_StationPos);
                 ShowState("发送机器人放片坐标：" + pos.DblValue1.ToString("f3") + @"/" + pos.DblValue2.ToString("f3"));
