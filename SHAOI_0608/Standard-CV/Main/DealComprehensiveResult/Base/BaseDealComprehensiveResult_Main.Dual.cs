@@ -100,15 +100,26 @@ namespace Main
             ParCalibRotate parCalibRotate = (ParCalibRotate)baseParComprehensive;
 
             Point2D orgPoint = new FunCalibRotate().GetOriginPoint(Protocols.BotRCCalibAngle, Pt2Mark2, Pt2MarkRC);
-
+            ShowState("计算旋转中心X:" + orgPoint.DblValue1 + ",Y:" + orgPoint.DblValue2);
             Point2D offset = new Point2D(Protocols.GlassXInPresize / 2 / AMP, Protocols.GlassYInPresize / 2 / AMP);
             double r = ModuleBase.GetCurAngleByY(Protocols.GlassXInPresize, AMP, Pt2Mark1, Pt2Mark2);
             offset = TransDelta(offset, r + 0.5, 0);
             Point2D rc = new Point2D(offset.DblValue1 + Pt2Mark2.DblValue1, offset.DblValue2 + Pt2Mark2.DblValue2);
             ShowState("理论旋转中心X:" + rc.DblValue1 + ",Y:" + rc.DblValue2);
-            parCalibRotate.XRC = rc.DblValue1;// orgPoint.DblValue1;
-            parCalibRotate.YRC = rc.DblValue2;// orgPoint.DblValue2;
-
+            if(Math.Abs(orgPoint.DblValue1-rc.DblValue1)<1000 &&
+                Math.Abs(orgPoint.DblValue2 - rc.DblValue2) < 1000)
+            {
+                ShowState("使用计算旋转中心");
+                parCalibRotate.XRC = orgPoint.DblValue1;
+                parCalibRotate.YRC = orgPoint.DblValue2;
+            }
+            else
+            {
+                ShowState("使用理论旋转中心");
+                parCalibRotate.XRC = rc.DblValue1;// orgPoint.DblValue1;
+                parCalibRotate.YRC = rc.DblValue2;// orgPoint.DblValue2;
+            }
+            
             ParComprehensive2.P_I.WriteXmlDoc(Camera2RC);
             //将参数保存到结果类
             new FunCalibRotate().SaveParToResult(HtResult_Cam2, parCalibRotate);
