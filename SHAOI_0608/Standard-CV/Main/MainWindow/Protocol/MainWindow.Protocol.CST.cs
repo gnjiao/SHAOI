@@ -18,6 +18,7 @@ namespace Main
         /// <summary>
         /// 卡塞偏差阈值
         /// </summary>
+        const string key_std_IntervalThread = "std9";
         const string key_std_cstthread = "std10";
         /// <summary>
         /// 卡塞基准值
@@ -64,14 +65,14 @@ namespace Main
         {
             get
             {
-                return 1.2;
+                return stdCSTDeltaHeightThread == 0 ? 1.2 : stdCSTDeltaHeightThread;
             }
         }
         public static double CSTThread_KeelSpacing
         {
             get
             {
-                return 2;
+                return stdCSTKeelIntervalThread == 0 ? 2 : stdCSTKeelIntervalThread;
             }
         }
 
@@ -120,6 +121,24 @@ namespace Main
             {
                 string key = key_std_cstthread;
                 return ParStd.Value3(key);
+            }
+        }
+
+        static double stdCSTKeelIntervalThread
+        {
+            get
+            {
+                string key = key_std_IntervalThread;
+                return ParStd.Value1(key);
+            }
+        }
+
+        static double stdCSTDeltaHeightThread
+        {
+            get
+            {
+                string key = key_std_IntervalThread;
+                return ParStd.Value2(key);
             }
         }
 

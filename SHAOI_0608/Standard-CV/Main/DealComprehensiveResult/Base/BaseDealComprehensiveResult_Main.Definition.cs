@@ -12,5 +12,7 @@ namespace Main
         protected const string Camera1Match1 = @"C2";
         protected const string Camera2Match1 = @"C2";
         protected const string Camera2RC = @"C6";
+
+        public static int StationNum = 1;
     }
 }

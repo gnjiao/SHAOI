@@ -90,6 +90,7 @@ namespace Main
         {
             try
             {
+                BaseDealComprehensiveResult_Main.StationNum = i;
                 ShowState("触发保留4");
             }
             catch (Exception ex)

@@ -53,19 +53,19 @@ namespace Main
                     Protocols.ConfPlaceAngle, Protocols.ConfPreciseAngle);
                 ShowState(string.Format("工位{0}X方向补偿{1},Y方向补偿{2}", index, delta.DblValue1.ToString(ReserveDigits), delta.DblValue2.ToString(ReserveDigits)));
 
-
+                int num = (StationNum - 1) * 2 + index;
                 Point4D pos = new Point4D
                 {
                     DblValue1 = delta.DblValue1
                     + StationDataMngr.PlacePos_L[index - 1].DblValue1
-                    + ParAdjust.Value1("adj" + index),
+                    + ParAdjust.Value1("adj" + num),
 
                     DblValue2 = delta.DblValue2
                     + StationDataMngr.PlacePos_L[index - 1].DblValue2
-                    + ParAdjust.Value2("adj" + index),
+                    + ParAdjust.Value2("adj" + num),
 
                     DblValue3 = StationDataMngr.PlacePos_L[index - 1].DblValue3,
-                    DblValue4 = Protocols.ConfPlaceAngle + angle + ParAdjust.Value3("adj" + index)
+                    DblValue4 = Protocols.ConfPlaceAngle + angle + ParAdjust.Value3("adj" + num)
                 }; 
 
                 LogicRobot.L_I.WriteRobotCMD(pos, Protocols.BotCmd_StationPos);
